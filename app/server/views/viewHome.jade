@@ -1,0 +1,48 @@
+﻿extends layout
+
+block content
+	- var isAdminViewUsers = (udata.isAdmin == true? 'Gestionar Usuarios &nbsp;&nbsp;&nbsp;' : '')
+	- var isAdminViewArticles = (udata.isAdmin == true? 'Gestionar Articulos': '')   
+	- var isNotAdmin = (udata.isAdmin == true? 'Usuario Administrador' : 'Usuario Regular')
+		#post-container
+			h2 #{isNotAdmin} <br>
+			a(class='#btn-viewUsers', href='/print/') 
+				| #{isAdminViewUsers}         
+			a(class='#btn-viewArticles', href='/printArticles/') 
+				| #{isAdminViewArticles} <br>
+	- for (var i = 0; i < posts.length; i++)
+		- var edit = (posts[i].author === udata.name? 'Editar':'')
+		- var borrar = (posts[i].author === udata.name? 'Borrar':'')     
+		#post-container.well      
+			| #{udata.user.isAdmin} 
+			h1.label#Title Titulo 
+			| #{posts[i].title} <br><br>
+			h1.label#Author Autor 
+			|	#{posts[i].author} <br><br>
+			h1.label#Date Fecha
+			|  #{posts[i].date} <br><br>
+			h2.label#Body Cuerpo
+			|	#{posts[i].body} <br><br>
+			h2.label#Tags Etiquetas
+			- for (var j = 0; j < posts[i].tags.length; j++)
+				p.subheading #{posts[i].tags[j]} <br>
+			h2.label#Comments Commentarios			
+			- for (var j = 0; j < posts[i].comments.length; j++)            
+				p.subheading #{posts[i].comments[j].body} <br>            
+			div.clear-fix
+			hr
+			a(class='#btn-addComment', href='/addComment/'+posts[i]._id ) 
+				| Ver Post / Comentar <br>
+			a(class='#btn-editPost', href='/editPost/'+posts[i]._id ) 
+				| #{edit}     <br> 
+			a(class='#btn-deletePost', href='/deletePost/'+posts[i]._id ) 
+				| #{borrar}    <br>
+	include navBar
+
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/controllers/navBarController.js')
+	script(src='/js/views/navBar.js')	

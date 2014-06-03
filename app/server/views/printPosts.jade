@@ -1,0 +1,43 @@
+﻿extends layout
+
+block content
+	div.container(style='margin:20px')
+		table.table.table-bordered.table-striped
+			br
+			thead
+				tr
+					
+					th(style='width:40px') #
+					th(style='width:180px') Title
+					th(style='width:200px') Body
+					th(style='width:180px') Date
+					th(style='width:180px') Author
+					th(style='width:180px') Comments
+					th(style='width:180px') Tags
+					th(style='width:180px') Options
+                    
+                    
+			tbody
+			
+			- for (var i = 0; i < posts.length; i++)
+				- var edit = (posts[i].author === udata.name? 'Edit':'') 
+				tr
+					td= i+1
+					td= posts[i].title
+					td= posts[i].body
+					td= posts[i].date
+					td= posts[i].author
+					td	
+						- for (var j = 0; j< posts[i].comments.length; j++) 
+							{posts[i].comments[j].body}
+					td= posts[i].tags
+					td: a(class='#btn-addComment', href='/addComment/'+posts[i]._id ) AddComment
+					td: a(class='#btn-editPost', href='/editPost/'+posts[i]._id ) #{edit}
+	include navBar
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/controllers/navBarController.js')
+	script(src='/js/views/navBar.js')		

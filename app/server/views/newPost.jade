@@ -1,0 +1,65 @@
+﻿extends layout
+
+block content
+	#post-container
+		#login-form.well.span4
+			#audio-preview
+				audio(preload="auto", autobuffer, controls)#recordingslist
+			h1 Video Record
+			video(autoplay width="320px")
+			button(autoplay margin: 50px)#camera-me.btn.btn-primary
+				i.icon-film.icon-white
+				|Capture
+			div.clear-fix                
+			#video-preview
+				button#record-me.btn.btn-success REC
+				button#stop-me.btn.btn-danger STOP
+				div.clear-fix	
+				button(type="hidden")#counter.btn.btn-			
+				span#elapsed-time
+		form( method="post")#newPost-form.well.span4
+			h1 Add some metadata!
+			p.subheading Please enter a Title and some content for the video article. 
+			label#isPrivate.checkbox Private article
+				input(type="checkbox",name='isPrivateVideo')
+			input(type='hidden', name="videoBlobURL", id='videoBlobURL')
+			input(type='hidden', name="audioBlobURL", id='audioBlobURL')            
+			input(type='hidden', name="audioBlob",id='audioBlob')            
+			input(type='hidden', name="videoBlob", id='videoBlob')
+			input(type='hidden',name="author", id='author',value='#{udata.name}')
+			#title-cg.control-group
+				label.control-label(for='postTitle') Title
+				.controls
+					input#postTitle(type="text", name="postTitle", id='postTitle').span4.required
+			label Article Body
+			input(type="text", name="postBody", id='postBody', style="width:300px; height:40px;").span4.required
+			label Tags(usar espacios para insertar varias) 
+			input(type="text", name="postTags", id='postTags').span4.required
+			button(type="submit")#btn-save.btn.btn-primary
+				i.icon-film.icon-white
+				| Save
+			div.clear-fix
+			hr
+			div.btm-links
+				a(href='/home')#goto-home Back to Home
+	include navBar
+	include modals/alert
+	include modals/form-errors
+
+block scripts
+	script(src='/vendor/jquery-1.11.0.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/views/navBar.js')
+	script(src='/js/controllers/navBarController.js')
+	script(src='/js/controllers/videoController.js')
+	script(src='/js/controllers/libmp3lame.min.js')
+	script(src='/js/controllers/whammy.js')
+	script(src='/js/controllers/homeController.js')
+	script(src='/js/views/newPost.js')
+	script(src='/js/form-validators/postValidator.js')
+	script(src='/js/controllers/newPostController.js')
+	script(src='/js/controllers/recorder.js')
+	script(src='/js/controllers/recorderWorker.js')
+	script(src='/js/controllers/mp3Worker.js')    

@@ -1,0 +1,33 @@
+
+extends layout
+
+block content
+	div.container(style='margin:20px')
+		table.table.table-bordered.table-striped
+			br
+			h1 Panel Administrador (Cuentas usuario)            
+			thead
+				tr
+					th(style='width:40px') #
+					th(style='width:180px') Name
+					th(style='width:200px') Location
+					th(style='width:180px') Username
+					th Account Created
+					th Admin Options
+			tbody
+			- for (var i = 0; i < accts.length; i++)
+				tr
+					td= i+1
+					td= accts[i].name
+					td= accts[i].country
+					td= accts[i].user
+					td= accts[i].date
+					td: a(class='#btn-deleteAdmin', href='/delete/'+accts[i]._id ) Delete
+	include navBar
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/controllers/navBarController.js')
+	script(src='/js/views/navBar.js')                    	
