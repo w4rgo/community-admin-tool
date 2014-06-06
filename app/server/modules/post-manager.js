@@ -284,7 +284,7 @@ var findById = function(id, callback)
 	});
 };
 
-var findByMultipleFields = function(a, callback)
+exports.findByMultipleFields = function(a, callback)
 {
 // this takes an array of name/val pairs to search against {fieldName : 'value'} //
 	posts.find( { $or : a } ).toArray(

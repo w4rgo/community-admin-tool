@@ -262,12 +262,27 @@ module.exports = function(app) {
 
         else if ((isAuthorSearch)&(isTagSearch)&(isTitleSearch)){
 
-
-
-
-
             
+            PM.findByMultipleFields([{author:req.body.searchField},{tags: req.body.searchField}], function(error, posts){
+                if (error){
+                            //console.log("searchfield:"+ req.body.searchField);
+                            console.log("Post no encontrado ");res.send(error,400)
+
+                            }else{
+                            //console.log("searchfield:"+ req.body.searchField);
+                            //console.log("renderizando la pagina enviando el post, con titulo: "+ post.title);
+                            res.render('viewHome',{
+                                posts: posts,
+                                udata: req.session.user
+                
+                            });
+                
+                            }
+                            
+                            });
+
                 }else if (isAuthorSearch){
+                    console.log("ES BUSQUEDA AUTOR");
 
                     PM.findPostByAuthor(req.body.searchField, function(error, post){
             
@@ -286,11 +301,10 @@ module.exports = function(app) {
                         }
             
                     });
-
-
-                        
+    
                       
                 }else if (isTagSearch){
+                    //console.log("ES BUSQUEDA TAG");
 
                     PM.getAllPostsFromTag(req.body.searchField, function(error, posts){
             
@@ -300,7 +314,7 @@ module.exports = function(app) {
 
                             }else{
 
-                            console.log("devuelta coleccion de posts: ");
+                            //console.log("devuelta coleccion de posts: ");
                             res.render('viewHome',{
                                 posts: posts,
                                 udata: req.session.user
@@ -310,8 +324,20 @@ module.exports = function(app) {
             
                     });
 
+                }else {
+                    
+                    PM.getAllNoPrivatePosts(req.session.user.name,function (e, postCollection){
+                        if (!e)
+                    res.render('viewHome',{
+                        
+                        udata : req.session.user,
+                        posts : postCollection  
+                        })
+                        else{
+                            console.log("Post no encontrado ");res.send(error,400)}
+                
+                });
                 }
-
 
 	    });
 

@@ -1,26 +1,29 @@
 ﻿extends layout
 block content
 	#account-form-container
-		form( method="post")#search-author-form.well.span4
-			h2 Search Post 
-			label#isAuthorSearch.checkbox Search by author
+		form( method="post")#search-form.well.span4
+			h2 Buscar Post 
+			label#isAuthorSearch.checkbox Buscar por autor
 				input(type="checkbox",name='isAuthorSearch')
-			label#isTagSearch.checkbox Search by tag
+			label#isTagSearch.checkbox Buscar por titulo
 				input(type="checkbox",name='isTagSearch') 
-			label#isTitleSearch.checkbox Search by title
+			label#isTitleSearch.checkbox Buscar por titulo
 				input(type="checkbox",name='isTitleSearch')                
-			input(type="text", name="searchField", id='searchField').span4.required
+			#search-cg.control-group
+				label.control-label(for='searchField') Palabras Clave:
+				.controls
+					input(type="text", name="searchField", id='searchField').span4.required
 			button(type="submit")#btn-searchByAuthor.btn.btn-success
 				i.icon-search.icon-pencil
-				| Search
+				| Buscar
 			button(type="button")#btn-cancel.btn.btn-danger			
 				i.icon-pencil.icon-pencil
-				|Back
+				|Volver
 			hr      
-		
 			
 	include navBar
 	include modals/alert
+	include modals/form-errors
 
     
 block scripts
@@ -30,4 +33,8 @@ block scripts
 	script(src='/vendor/bootstrap-transition.js')
 	script(src='/js/controllers/navBarController.js')
 	script(src='/js/views/navBar.js')
+	script(src='/js/views/search.js')
+	script(src='/js/form-validators/postValidator.js')
+	script(src='/js/controllers/searchController.js')
+
 

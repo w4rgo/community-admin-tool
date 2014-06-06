@@ -32,7 +32,7 @@
 
 	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
 	$('.modal-alert .modal-header h3').text('Success!');
-	$('.modal-alert .modal-body p').html('Your COMENTARIO has been created.</br>Click OK to return to the login page.');
+	$('.modal-alert .modal-body p').html('Tu Comentario ha sido creado.</br>Pulsa OK para volver a la pagina principal.');
 
 
 

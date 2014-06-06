@@ -19,6 +19,7 @@ function HomeController()
 
 //MIO search posts //
     $('#btn-search').click(function(){ window.location.href = '/searchPost'; });
+
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
 
