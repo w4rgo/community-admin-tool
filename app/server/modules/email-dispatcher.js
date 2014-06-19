@@ -1,4 +1,5 @@
 
+//METODOS AUXILIARES PARA EL ENVIO DE EMAIL
 var ES = require('./email-settings');
 var EM = {};
 module.exports = EM;

@@ -1,4 +1,5 @@
-﻿function PostValidator(){
+﻿//VALIDADOR DE ARTICULOS
+function PostValidator(){
     
     
     //Campos a validar
@@ -7,7 +8,7 @@
 	this.controlGroups = [$('#title-cg')];
     this.controlGroups2 = [$('#search-cg')];
     
-    // bind the form-error modal window to this controller to display any errors //
+    // ENLAZA LA VENTANA MODAL DE LOS ERRORES EN EL FORM CON ESTE CONTROLADORPARA MOSTRAR ERRORES
 	
 	this.alert = $('.modal-form-errors');
 	this.alert.modal({ show : false, keyboard : true, backdrop : true});
@@ -36,6 +37,7 @@
     
     }
 
+//METODOS AUXILIARES
 PostValidator.prototype.showInvalidSearch = function()
 {
 	this.controlGroups2[0].addClass('error');

@@ -1,18 +1,17 @@
-
+//CLASE VALIDADORA DE EMAIL
 function EmailValidator(){
 
-// bind this to _local for anonymous functions //
-
+// ENLAZA ESTA FUNCION CON LA VARIABLE _LOCAL PARA FUNCIONES ANONIMAS
     var _local = this;
 
-// modal window to allow users to request credentials by email //
+// VENTANA MODAL PARA PERMITIR QUE LOS USUARIOS PUEDAN RECUPERAR CREDENCIALES POR EMAIL
 	_local.retrievePassword = $('#get-credentials');
 	_local.retrievePassword.modal({ show : false, keyboard : true, backdrop : true });
 	_local.retrievePasswordAlert = $('#get-credentials .alert');
 	_local.retrievePassword.on('show', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
 
 }
-
+//FUNCIONES AUXILIARES
 EmailValidator.prototype.validateEmail = function(e)
 {
 	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

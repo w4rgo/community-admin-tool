@@ -11,8 +11,6 @@ function HomeController()
 //MIO handle user logout //
 	$('#btn-goNewPost').click(function(){ window.location.href = '/newPost'; });
 
-//MIO handle addComment
- //   $('#btn-addComment').click(function(){$('#addComment').modal('show');});
 
 //MIO handle user logout //
 	$('#btn-goModifyAccount').click(function(){ window.location.href = '/modifyAccount'; });
@@ -22,8 +20,6 @@ function HomeController()
 
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
-
-
 
 // handle account deletion //
 	$('add-comment-form-submit').click(function(){ window.location.href = '/modifyAccount'; });
@@ -70,41 +66,6 @@ function HomeController()
 		}
 	});
 
-
-
-/*
-    $(document).on("click", ".open-Modal", function () {
-        var myDNI = $(this).data('id');
-        $(".modal-body #DNI").val( myDNI );
-        });
-*/
-	
-	//$('#addComment').on('shown', function(){});
-
-
-
-
-/*
-    this.addComment = function(){
-        $('.modal-addcomment').modal('hide');
-		var that = this;
-		$.ajax({
-			url: '/addComment',
-			type: 'POST',
-			data: { body: $('commentBody').val(),
-                    title:'pruebacomentarios'
-                    },
-			success: function(data){
-	 			that.showLockedAlert('Your comment has been Posted.<br>Redirecting you back to the homepage.');
-			},
-			error: function(jqXHR){
-				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
-			}
-		});
-	}
-
-*/
-        
 
 
     this.goTo = function(path){

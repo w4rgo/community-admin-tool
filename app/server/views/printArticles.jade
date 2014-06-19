@@ -9,13 +9,13 @@ block content
 				tr
 					
 					th(style='width:40px') #
-					th(style='width:180px') Title
-					th(style='width:200px') Body
-					th(style='width:180px') Date
-					th(style='width:180px') Author
-					th(style='width:180px') Comments
-					th(style='width:180px') Tags
-					th(style='width:180px') Admin Options
+					th(style='width:180px') Titulo
+					th(style='width:200px') Cuerpo
+					th(style='width:180px') Fecha
+					th(style='width:180px') Autor
+					th(style='width:180px') Comentarios
+					th(style='width:180px') Etiquetas
+					th(style='width:180px') Opciones Admin
                     
                     
 			tbody
@@ -31,8 +31,8 @@ block content
 						- for (var j = 0; j < posts[i].comments.length; j++)            
 							p.subheading #{posts[i].comments[j].body}
 					td= posts[i].tags
-					td: a(class='#btn-delete', href='/deletePost/'+posts[i]._id ) Delete
-					td: a(class='#btn-editPost', href='/editPost/'+posts[i]._id ) Edit
+					td: a(class='#btn-delete', href='/deletePost/'+posts[i]._id ) Borrar
+					td: a(class='#btn-editPost', href='/editPost/'+posts[i]._id ) Editar
 	include navBar
  
 block scripts

@@ -4,8 +4,7 @@ $(document).ready(function(){
 	var lv = new LoginValidator();
 	var lc = new LoginController();
 
-// main login form //
-
+//FORMULARIO PRINCIPAL DE LOGIN
 	$('#login-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (lv.validateForm() == false){
@@ -20,12 +19,12 @@ $(document).ready(function(){
 			if (status == 'success') window.location.href = '/home';
 		},
 		error : function(e){
-            lv.showLoginError('Login Failure', 'Please check your username and/or password');
+            lv.showLoginError('Fallo Login', 'Por favor revise su Username y/o Password');
 		}
 	}); 
 	$('#user-tf').focus();
 	
-// login retrieval form via email //
+//OBTENCION DEL LOGIN EN BASE AL EMAIL
 	
 	var ev = new EmailValidator();
 	
@@ -36,15 +35,15 @@ $(document).ready(function(){
 				ev.hideEmailAlert();
 				return true;
 			}	else{
-				ev.showEmailAlert("<b> Error!</b> Please enter a valid email address");
+				ev.showEmailAlert("<b> Error!</b> Por favor introduzca un Email valido");
 				return false;
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			ev.showEmailSuccess("Check your email on how to reset your password.");
+			ev.showEmailSuccess("Compruebe su email para restablecer su password.");
 		},
 		error : function(){
-			ev.showEmailAlert("Sorry. There was a problem, please try again later.");
+			ev.showEmailAlert("Vaya. Se ha producido un error, por favor intentelo de nuevo mas tarde.");
 		}
 	});
 	

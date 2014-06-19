@@ -34,7 +34,6 @@
           //e.inputBuffer.getChannelData(1)
         ]
       });
-     // trace('onAudioProcess');
     }
 
     this.configure = function(cfg){
@@ -51,7 +50,7 @@
     }
 
     this.stop = function(){
-        console.log("PONEMOS RECORDING A FALSE");
+        //console.log("PONEMOS RECORDING A FALSE");
       recording = false;
     }
 
@@ -65,7 +64,7 @@
     }
 
     this.exportWAV = function(cb, type){
-        console.log("ENTRAMOS EN EXPORT WAV");
+
       currCallback = cb || config.callback;
       type = type || config.type || 'audio/wav';
       if (!currCallback) throw new Error('Callback not set');
@@ -73,14 +72,11 @@
         command: 'exportWAV',
         type: type
       });
-      console.log("CAMBIAMOS EL COMANDO A EXPORTWAV");
+      
     }
 
     worker.onmessage = function(e){
       var blob = e.data;
-      //currCallback(blob);
-
-      //prueba mp3
       var arrayBuffer;
       var fileReader = new FileReader();
 
@@ -90,11 +86,8 @@
          var buffer = new Uint8Array(arrayBuffer),
          data = parseWav(buffer);
  
-         console.log(data);
+         //Conversion a MP3
          console.log("Converting to Mp3");
-          
-
-         //Comienza la conversion a mp3
          encoderWorker.postMessage({ cmd: 'init', config:{
                 mode : 3,
                 channels:1,
@@ -113,7 +106,7 @@
                  //log.innerHTML += "\n" + "Done converting to Mp3";
                 
                 var mp3Blob = new Blob([new Uint8Array(e.data.buf)], {type: 'audio/mp3'});
-                console.log("mp3blob: "+ mp3Blob);
+                
                readAudio(mp3Blob);
 
                //$('#audioBlob').value = result;
@@ -132,13 +125,9 @@
 
 
         }if (e.data.cmd == 'end') {
-            console.log('----------END');
-            console.log('audioblobURL:'+ audioBlobURL);
-            console.log('audioBlob:'+ audioBlob);
             
             $('#audioBlob').value = audioBlob;
             $('#audioBlobURL').value = audioBlobURL;
-             console.log('asignado al value');
              
             var au = $('#recordingslist');
             var hf = document.createElement('a');
@@ -177,11 +166,11 @@
 			var mp3Name = encodeURIComponent('audio_recording_' + new Date().getTime() + '.mp3');
             var result = reader.result;
 
-            console.log("mp3name = " + mp3Name);
+          /*  console.log("mp3name = " + mp3Name);
             console.log("resultado = " + result);
             console.log("mp3data = " + mp3Data);
             console.log("URL CONVERTIDA:"+window.URL.createObjectURL(mp3Data));
-
+          */
            audioBlob = result;
            audioBlobURL = window.URL.createObjectURL(mp3Data);
            

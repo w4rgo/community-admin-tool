@@ -7,7 +7,7 @@ var PM = require('./modules/post-manager');
 
 module.exports = function(app) {
 
-// main login page //
+// PAGINA DE LOGIN PRINCIPAL //
 
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
@@ -41,13 +41,13 @@ module.exports = function(app) {
 		});
 	});
 	
-
+    //GET VISUALIZAR UN ARTICULO
     app.get('/post/:title', function(req,res){
         PM.findPostByTitle(req.params.title, function(error, post){
-            console.log("el titulo obtenido de la url es: "+ req.params.title);
+           
             if (error){res.send(error,400)}
             else{
-                console.log("renderizando la pagina enviando el post, con titulo: "+ post.title);
+ 
             res.render('post_show',{
                 post: post
                 
@@ -59,7 +59,7 @@ module.exports = function(app) {
 
 
 
-    //PRUEBA PA ADDPOST
+    //GET AÑADIR UN NUEVO ARTICULO
     app.get('/newPost', function(req, res) {
         if (req.session.user == null){
             res.redirect('/');
@@ -71,7 +71,7 @@ module.exports = function(app) {
                     });
 	    }
         });
-	
+	//POST AÑADIR UN NUEVO ARTICULO
 	app.post('/newPost', function(req, res){
 
         if (req.param('isPrivateVideo') == 'on')
@@ -90,11 +90,8 @@ module.exports = function(app) {
             audioBlob: req.param('audioBlob'),
             audioBlobURL: req.param('audioBlobURL'),
             isPrivate: esVideoPrivado
-  
-                            
-  //author	: req.session.user ESTO PASA EL OBJETO USUARIO
-  
-			//country : req.param('country')
+ 
+	
 		}, function(e){
 			if (e){
 				res.send(e, 400);
@@ -109,7 +106,7 @@ module.exports = function(app) {
 		});
 	});
 
-
+     //GET EDITAR UN NUEVO ARTICULO
      app.get('/editPost/:idPost', function(req,res){
 
             var id= req.params.idPost;
@@ -131,22 +128,22 @@ module.exports = function(app) {
             
             });
             });
-
+      //POST AÑADIR UN NUEVO ARTICULO
       app.post('/editPost/:idPost', function(req, res){
 
-		console.log("ESTE SON LOS PARAMETROS PASADOS DESDE EL editPost/post :"
+		/*console.log("ESTE SON LOS PARAMETROS PASADOS DESDE EL editPost/post :"
                 + " TITLE:"+ req.body.editTitle
                 + " COMMENTBODY: "+ req.body.editBody
                 + " author: "+ req.body.author
                 + " tags: "+ req.body.editTags
-                ); 
+                ); */
             
         if (req.param('isPrivateVideo') == 'on')
             esVideoPrivado=1;
         else 
             esVideoPrivado=0;
 
-        //var data = req.body;  
+          
           
         PM.editPost({
             oldTitle: req.param('oldTitle'),
@@ -164,37 +161,26 @@ module.exports = function(app) {
 
                 res.send(e, 400);
             }else{
-                console.log('ROUTER.JS(post de editPOST RES.SEND OK)');
+                //console.log('ROUTER.JS(post de editPOST RES.SEND OK)');
                 res.send('ok',200);
                 }
             });    
             
      });    
 
-
-
-    //METODO SIN USAR MODAL PARA AÑADIR COMENTARIO
-    //PONE ID_POST PERO EN REALIDAD SE ESTA EMPLEANDO EL TITULO XQ NO FUCA LA FINDBYID
-   
+     //GET AÑADIR UN NUEVO COMENTARIO 
      app.get('/addComment/:idPost', function(req,res){
 
             var id= req.params.idPost;
-            //console.log("el titulo obtenido de la url es: "+ req.params.idPost);
-
+            
             PM.findPostById(id,function(error, post){
-                
-                
+                                
                 if (error){
-                    console.log("ERROR EN EL GET ");res.send(error,400)}
-                
+                    res.send(error,400)}
                 else{
-               // console.log("renderizando la pagina enviando el post, con id: "+ post.title);
-               // console.log("renderizando la pagina enviando el post, con usuario: "+ req.session.user.name);
-                
-               
-                res.render('addComment',{
-                    post: post,
-                    udata: req.session.user
+                    res.render('addComment',{
+                        post: post,
+                        udata: req.session.user
                 
                 });
                              
@@ -206,14 +192,14 @@ module.exports = function(app) {
 
 
            
-
+  //POST AÑADIR UN NUEVO COMENTARIO
   app.post('/addComment/:idPost', function(req, res){
 
-		console.log("ESTE SON LOS PARAMETROS PASADOS DESDE EL addComment/post :"
+		/*console.log("ESTE SON LOS PARAMETROS PASADOS DESDE EL addComment/post :"
                 + "TITLE:"+ req.body.title 
                 + " COMMENTBODY: "+ req.body.commentBody 
                 + "author: "+ req.body.author 
-                + " id: "+ req.body._id); 
+                + " id: "+ req.body._id); */
             
 
         var data = req.body;  
@@ -239,74 +225,75 @@ module.exports = function(app) {
 
 
     //BUSCAR POSTS
-    app.get('/searchPost', function(req,res){
+    app.get('/viewHome/:searchField', function(req,res){
         if (req.session.user == null){
             res.redirect('/');
 	    }else{
-		    res.render('searchPost', {                   
-                    udata : req.session.user
-                    });
-	    }
-        });
 
-    app.post('/searchPost', function(req, res){
-		//console.log("[searchpost] authorSearch:"+ req.body.authorSearch + " tagSearch: "+ req.body.tagSearch + "checkbox1: " + req.param('isAuthorSearch') );    
-        
-            var isAuthorSearch = req.param('isAuthorSearch') == 'on';
-            var isTagSearch = req.param('isTagSearch') == 'on';
-            var isTitleSearch = req.param('isTitleSearch') == 'on';
-            
-        if (req.param('searchField')== ''){
-		    console.log("ERROR EN EL GET ");res.send("Campo de busqueda vacio",400);           
-            }
-
-        else if ((isAuthorSearch)&(isTagSearch)&(isTitleSearch)){
 
             
-            PM.findByMultipleFields([{author:req.body.searchField},{tags: req.body.searchField}], function(error, posts){
-                if (error){
-                            //console.log("searchfield:"+ req.body.searchField);
+             var parametros = req.params.searchField;
+             //console.log("CAMPOS: "+ parametros );
+             //var tags = post.tags;
+             var paramSeparados = parametros.split(" ");
+             var campoBusqueda = paramSeparados[0];
+             var isAuthorSearch =paramSeparados[1] ;
+             var isTagSearch = paramSeparados[2];
+             var isTitleSearch = paramSeparados[3];
+             /*console.log("CAMPOS separados: "+ paramSeparados );
+             console.log("CAMPO1 "+paramSeparados[0]);
+             console.log("CAMPO2 "+paramSeparados[1]);
+             console.log("CAMPO3 "+paramSeparados[2]);
+             console.log("CAMPO4 "+paramSeparados[3]);*/
+             if ((isAuthorSearch==="true")&(isTagSearch==="true")&(isTitleSearch==="true")){
+
+               
+                PM.findByMultipleFields([{author:campoBusqueda},{tags: campoBusqueda},{title:campoBusqueda}], function(error, posts){
+                    
+                    if (error){
+                            
                             console.log("Post no encontrado ");res.send(error,400)
 
                             }else{
-                            //console.log("searchfield:"+ req.body.searchField);
-                            //console.log("renderizando la pagina enviando el post, con titulo: "+ post.title);
-                            res.render('viewHome',{
-                                posts: posts,
-                                udata: req.session.user
+
+                                res.render('viewHome',{
+                                    posts: posts,
+                                    udata: req.session.user
                 
-                            });
-                
-                            }
+                                });
+                                res.send(posts,200);
+                             }
                             
                             });
 
-                }else if (isAuthorSearch){
-                    console.log("ES BUSQUEDA AUTOR");
+                }else if (isAuthorSearch==="true"){
+                    
 
-                    PM.findPostByAuthor(req.body.searchField, function(error, post){
+                    PM.findPostByAuthor(campoBusqueda, function(error, post){
             
                         if (error){
                             
                             console.log("Post no encontrado ");res.send(error,400)
 
                             }else{
-
-                            console.log("renderizando la pagina enviando el post, con titulo: "+ post.title);
-                            res.render('addComment',{
-                                post: post,
-                                udata: req.session.user
+                            
+                                //res.send(post,req.session.user,200);
+                                res.render('viewHome',{
+                                    post: post,
+                                    udata: req.session.user
                 
                             });
+                            
                         }
             
                     });
     
                       
-                }else if (isTagSearch){
-                    //console.log("ES BUSQUEDA TAG");
-
-                    PM.getAllPostsFromTag(req.body.searchField, function(error, posts){
+                }else if (isTagSearch==="true"){
+                    
+                
+                    console.log("ES BUSQUEDA TAG:"+ campoBusqueda);
+                    PM.getAllPostsFromTag(campoBusqueda, function(error, posts){
             
                         if (error){
                             
@@ -314,7 +301,6 @@ module.exports = function(app) {
 
                             }else{
 
-                            //console.log("devuelta coleccion de posts: ");
                             res.render('viewHome',{
                                 posts: posts,
                                 udata: req.session.user
@@ -338,6 +324,32 @@ module.exports = function(app) {
                 
                 });
                 }
+                }
+
+	    });
+
+    //GET BUSCAR ARTICULO
+    app.get('/searchPost', function(req,res){
+        if (req.session.user == null){
+            res.redirect('/');
+	    }else{
+		    res.render('searchPost', {                   
+                    udata : req.session.user
+                    });
+	    }
+        });
+    //POST BUSCAR UN NUEVO ARTICULO
+    app.post('/searchPost', function(req, res){
+		
+        
+            var isAuthorSearch = req.param('isAuthorSearch') == 'on';
+            var isTagSearch = req.param('isTagSearch') == 'on';
+            var isTitleSearch = req.param('isTitleSearch') == 'on';
+             
+            var campo = req.body.searchField;
+            campo = campo +" "+ isAuthorSearch +" "+ isTagSearch +" "+ isTitleSearch;               
+            res.send(campo,200);
+          
 
 	    });
 
@@ -345,7 +357,7 @@ module.exports = function(app) {
 
 
 
-    //AÑADIDO POR MI, HE CAMBIADO LA PAGINA HOME POR MODIFYACCOUNT
+   //GET MODIFICAR CUENTA DE USUARIO
     app.get('/modifyAccount', function(req, res) {
 	        if (req.session.user == null){
 	    // if user is not logged-in redirect back to login page //
@@ -358,7 +370,7 @@ module.exports = function(app) {
 			    });
 	        }
 	    });
-
+    //POST MODIFICAR CUENTA USUARIO
 	app.post('/modifyAccount', function(req, res){
 		if (req.param('user') != undefined) {
 			AM.updateAccount({
@@ -389,8 +401,7 @@ module.exports = function(app) {
 
 
 
-// logged-in user homepage //
-	
+    //GET HOME UNA VEZ LOGUEADO	
 	app.get('/home', function(req, res) {
 	    if (req.session.user == null){
 	// if user is not logged-in redirect back to login page //
@@ -411,9 +422,8 @@ module.exports = function(app) {
         }
 	});
 	
-    
+    //POST HOME
 	app.post('/home', function(req, res){
-        //este post ahora habria que cambiarlo para enviar un POST al server con un nuevo "articulo o video"
 
 		if (req.param('user') != undefined) {
 			AM.updateAccount({
@@ -444,8 +454,7 @@ module.exports = function(app) {
 	
 
 
-// creating new accounts //
-	
+    //CREAR NUEVA CUENTA
 	app.get('/signup', function(req, res) {
 		res.render('signup', {  title: 'Signup', countries : CT });
 	});
@@ -468,19 +477,7 @@ module.exports = function(app) {
 		});
 	});
 
-
-
-    /*
-var isAuthorSearch = req.param('isAuthorSearch') == 'on';
-            var isTagSearch = req.param('isTagSearch') == 'on';
-            var isTitleSearch = req.param('isTitleSearch') == 'on';
-            
-        if (req.param('searchField')== ''){
-
-    */
-
-// password reset //
-
+//RESETEO DE PASSWORD
 	app.post('/lost-password', function(req, res){
 	// look up the user's account via their email //
 		AM.getAccountByEmail(req.param('email'), function(o){
@@ -530,9 +527,10 @@ var isAuthorSearch = req.param('isAuthorSearch') == 'on';
 			}
 		})
 	});
-	
-// view & delete accounts //
-	
+
+	//...........................
+    //RUTAS PARA EL ADMINISTRADOR
+    //...........................
 	app.get('/print', function(req, res) {
         if ((req.session.user.isAdmin == false)||(req.session.user.isAdmin== undefined)){
             //console.log("EL USUARIO NO ES ADMIN: "+req.session.user.isAdmin);
@@ -549,22 +547,18 @@ var isAuthorSearch = req.param('isAuthorSearch') == 'on';
 
     app.get('/printArticles', function(req, res) {
         if ((req.session.user.isAdmin == false)||(req.session.user.isAdmin== undefined)){
-            //console.log("EL USUARIO NO ES ADMIN: "+req.session.user.isAdmin);
             res.redirect('/');
 	    }else{
-            //console.log("EL USUARIO ES ADMIN: "+req.session.user.isAdmin);
-		    PM.getAllPosts( function(e, posts){
+            PM.getAllPosts( function(e, posts){
 			    res.render('printArticles', { title : 'Article List', posts : posts , udata: req.session.user});
 		    })
 	    }
     })
     ;
 
-
+    //BORRAR UN ARTICULO
     app.get('/deletePost/:idPost', function(req, res){
-        
-
-        //console.log('ID POST A BORRAR:'+ req.params.idPost);
+         
         PM.deletePost(req.params.idPost,function(e, obj){
             
             if (!e){
@@ -591,12 +585,12 @@ var isAuthorSearch = req.param('isAuthorSearch') == 'on';
         AM.deleteAccount(req.params.idAcct,function(e, obj){
             
             if (!e){
-                console.log('redirigimos');
+                //console.log('redirigimos');
                  res.redirect('/');
                  res.send('ok', 200);
                 }
             else{
-                console.log('ID CRAR:');
+                //console.log('ID CRAR:');
                 res.send('record not found', 400);
                
                 }

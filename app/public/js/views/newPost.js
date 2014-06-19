@@ -6,7 +6,7 @@
     var npc = new newPostController();
     var pv = new PostValidator();
 
-
+    //FORMULARIO AJAX PARA AÑADIR NUEVO ARTICULO
     $('#newPost-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			return pv.validateForm();
@@ -23,11 +23,11 @@
 	});
     
     
-    // setup the alert that displays when an account is successfully created //
+    //CONFIGURACUION DE LAS ALERTAS MODALES CUANDO SE CREA LA CUENTA //
 
 	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
 	$('.modal-alert .modal-header h3').text('Success!');
-	$('.modal-alert .modal-body p').html('Your Article has been created.</br>Click OK to return to the login page.');
+	$('.modal-alert .modal-body p').html('Su articulo ha sido creado</br>Pulse OK para volver a la pagina de Login.');
 
 
 

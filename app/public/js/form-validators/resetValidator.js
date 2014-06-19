@@ -1,7 +1,7 @@
-
+//FUNCION PARA REINICIAR EL PASSWORD
 function ResetValidator(){
     
-// modal window to allow users to reset their password //
+//VENTANA MODAL PARA QUE LOS USUARIOS REINICIEN SU PASSWORD
     this.setPassword = $('#set-password');
     this.setPassword.modal({ show : false, keyboard : false, backdrop : 'static' });
     this.setPasswordAlert = $('#set-password .alert');
@@ -16,7 +16,7 @@ ResetValidator.prototype.validatePassword = function(s)
 		return false;
 	}
 }
-
+//METODOS AUXILIARES
 ResetValidator.prototype.showAlert = function(m)
 {
 	this.setPasswordAlert.attr('class', 'alert alert-error');

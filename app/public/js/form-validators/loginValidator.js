@@ -1,7 +1,7 @@
-
+//VALIDADOR DE LOGUEADO
 function LoginValidator(){
 
-// bind a simple alert window to this controller to display any errors //
+//ENLAZA UNA VENTANA MODAL DE ALERTA CON ESTE CONTROLADOR PARA MOSTRAR LOS ERRORES 
 
 	this.loginErrors = $('.modal-alert');
 	this.loginErrors.modal({ show : false, keyboard : true, backdrop : true });

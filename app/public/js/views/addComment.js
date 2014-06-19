@@ -3,6 +3,7 @@
 
     var ac = new addCommentController();
 
+    //FORMULARIO AJAX PARA AÑADIR UN COMENTARIO
     	$('#add-comment-form').ajaxForm({
 		    
 		    beforeSubmit : function(formData, jqForm, options){
@@ -22,16 +23,15 @@
 			    //ev.showEmailAlert("Sorry. There was a problem, please try again later.");
 		}
 	});
-	//$('#addComment').modal('show');
-	//$('#addComment').on('shown', function(){})
+
 
 
 
     $('#account-form-btn2').addClass('btn-primary');
-// setup the alert that displays when an account is successfully created //
+// CONFIGURACION DE MODAL DE CONFIRMACION //
 
 	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
-	$('.modal-alert .modal-header h3').text('Success!');
+	$('.modal-alert .modal-header h3').text('Exito!');
 	$('.modal-alert .modal-body p').html('Tu Comentario ha sido creado.</br>Pulsa OK para volver a la pagina principal.');
 
 

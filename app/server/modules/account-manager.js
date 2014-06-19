@@ -6,11 +6,9 @@ var moment 		= require('moment');
 
 var dbPort 		= 27017;
 var dbHost 		= 'localhost';
-//var dbName 		= 'node-login';
 var dbName 		= 'microBlog';
 
-/* establish the database connection */
-
+//ESTABLECIMIENTO DE LA CONEXION CON LA BASE DE DATOS
 var db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}), {w: 1});
 	db.open(function(e, d){
 	if (e) {
@@ -24,8 +22,7 @@ var accounts = db.collection('accounts');
 var blogs = db.collection('blogs');
 
 
-/* login validation methods */
-
+//METODOS DE VALIDACION LOGIN
 exports.autoLogin = function(user, pass, callback)
 {
 	accounts.findOne({user:user}, function(e, o) {
@@ -36,7 +33,7 @@ exports.autoLogin = function(user, pass, callback)
 		}
 	});
 }
-
+//VALIDACION LOGIN MANUAL AL INTRODUCIR SU PASS Y PULSAR LOGIN
 exports.manualLogin = function(user, pass, callback)
 {
 	accounts.findOne({user:user}, function(e, o) {
@@ -57,8 +54,7 @@ exports.manualLogin = function(user, pass, callback)
 
 
 
-
-/* record insertion, update & deletion methods */
+//METODOS DE INSERCION DE REGISTROS, ACTUALIZACION Y BORRADO
 
 exports.addNewAccount = function(newData, callback)
 {
@@ -82,6 +78,7 @@ exports.addNewAccount = function(newData, callback)
 	});
 }
 
+//METODO DE ACTUALIZACION DE UNA CUENTA
 exports.updateAccount = function(newData, callback)
 {
 	accounts.findOne({user:newData.user}, function(e, o){
@@ -104,7 +101,7 @@ exports.updateAccount = function(newData, callback)
 		}
 	});
 }
-
+//METODO DE ACTUALIZACION DEL PASSWORD
 exports.updatePassword = function(email, newPass, callback)
 {
 	accounts.findOne({email:email}, function(e, o){
@@ -119,13 +116,13 @@ exports.updatePassword = function(email, newPass, callback)
 	});
 }
 
-/* account lookup methods */
 
+//METODO DE BORRADO DE UNA CUENTA
 exports.deleteAccount = function(id, callback)
 {
 	accounts.remove({_id: getObjectId(id)}, callback);
 }
-
+//METODO PARA OBTENER UNA CUENTA SEGUN SU EMAIL
 exports.getAccountByEmail = function(email, callback)
 {
 	accounts.findOne({email:email}, function(e, o){ callback(o); });
@@ -137,7 +134,7 @@ exports.validateResetLink = function(email, passHash, callback)
 		callback(o ? 'ok' : null);
 	});
 }
-
+//METODO PARA DEVOLVER TODAS LAS CUENTAS
 exports.getAllRecords = function(callback)
 {
 	accounts.find().toArray(
@@ -146,14 +143,14 @@ exports.getAllRecords = function(callback)
 		else callback(null, res)
 	});
 };
-
+//METODO DE BORRADO DE CUENTAS
 exports.delAllRecords = function(callback)
 {
 	accounts.remove({}, callback); // reset accounts collection for testing //
 }
 
-/* private encryption & validation methods */
 
+//METODOS DE ENCRIPTACION Y VALIDACION
 var generateSalt = function()
 {
 	var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
@@ -182,7 +179,7 @@ var validatePassword = function(plainPass, hashedPass, callback)
 	callback(null, hashedPass === validHash);
 }
 
-/* auxiliary methods */
+//METODOS AUXILIARES
 
 var getObjectId = function(id)
 {

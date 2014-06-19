@@ -1,4 +1,6 @@
 
+
+//PROPIEDADES PARA EL ENVIO DE EMAILS DE RECUPERACION DEL PASSWORD
 module.exports = {
 	
 	host		: 'smtp.gmail.com',

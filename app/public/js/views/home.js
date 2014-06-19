@@ -30,30 +30,30 @@ $(document).ready(function(){
 
 // customize the account settings form //
 	
-	$('#account-form h1').text('Account Settings');
-	$('#account-form #sub1').text('Here are the current settings for your account.');
+	$('#account-form h1').text('Propiedades de cuenta');
+	$('#account-form #sub1').text('Aqui se muestran las propiedades de su cuenta.');
 	$('#user-tf').attr('disabled', 'disabled');
-	$('#account-form-btn1').html('Delete');
+	$('#account-form-btn1').html('Borrar');
 	$('#account-form-btn1').addClass('btn-danger');
-	$('#account-form-btn2').html('Update');
+	$('#account-form-btn2').html('Actualizar');
 
 // setup the confirm window that displays when the user chooses to delete their account //
 
 	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
-	$('.modal-confirm .modal-header h3').text('Delete Account');
-	$('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
-	$('.modal-confirm .cancel').html('Cancel');
-	$('.modal-confirm .submit').html('Delete');
+	$('.modal-confirm .modal-header h3').text('Borrar Cuenta');
+	$('.modal-confirm .modal-body p').html('¿Esta seguro de que desea borrar su cuenta?');
+	$('.modal-confirm .cancel').html('Cancelar');
+	$('.modal-confirm .submit').html('Borrar');
 	$('.modal-confirm .submit').addClass('btn-danger');
 
 
 // setup the confirm window that displays when the user chooses to add a comment //
 
 	$('.addComment').modal({ show : false, keyboard : true, backdrop : true });
-	$('.addComment .modal-header h3').text('Add a Comment');
+	$('.addComment .modal-header h3').text('Comentar');
 	//$('.modal-addcomment .modal-body p').html('<textarea rows="4" cols="50">');
-	$('.addComment .cancel').html('Cancel');
-	$('.addComment .submit').html('Post');
+	$('.addComment .cancel').html('Cancelar');
+	$('.addComment .submit').html('Enviar');
 	$('.addComment .submit').addClass('btn-danger');
    // $('.addComment button#submit').click(function(){window.location.href = '/home';})
 

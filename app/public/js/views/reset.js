@@ -2,7 +2,7 @@
 $(document).ready(function(){
 	
 	var rv = new ResetValidator();
-	
+	//FORMULARIO AJAX PARA EL ESTABLECIMIENTO DE LA NUEVA CONTRASEÑA
 	$('#set-password-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){;
 			rv.hideAlert();

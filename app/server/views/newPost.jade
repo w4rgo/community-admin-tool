@@ -5,11 +5,11 @@ block content
 		#login-form.well.span4
 			#audio-preview
 				audio(preload="auto", autobuffer, controls)#recordingslist
-			h1 Video Record
+			h1 Grabación de vídeo
 			video(autoplay width="320px")
 			button(autoplay margin: 50px)#camera-me.btn.btn-primary
 				i.icon-film.icon-white
-				|Capture
+				|Capturar
 			div.clear-fix                
 			#video-preview
 				button#record-me.btn.btn-success REC
@@ -18,9 +18,9 @@ block content
 				button(type="hidden")#counter.btn.btn-			
 				span#elapsed-time
 		form( method="post")#newPost-form.well.span4
-			h1 Add some metadata!
-			p.subheading Please enter a Title and some content for the video article. 
-			label#isPrivate.checkbox Private article
+			h1 Meta-Información
+			p.subheading Introduzca un titulo y contenido para el vídeo-artículo. 
+			label#isPrivate.checkbox Articulo privado
 				input(type="checkbox",name='isPrivateVideo')
 			input(type='hidden', name="videoBlobURL", id='videoBlobURL')
 			input(type='hidden', name="audioBlobURL", id='audioBlobURL')            
@@ -28,20 +28,20 @@ block content
 			input(type='hidden', name="videoBlob", id='videoBlob')
 			input(type='hidden',name="author", id='author',value='#{udata.name}')
 			#title-cg.control-group
-				label.control-label(for='postTitle') Title
+				label.control-label(for='postTitle') Titulo
 				.controls
 					input#postTitle(type="text", name="postTitle", id='postTitle').span4.required
-			label Article Body
+			label Cuerpo del artículo
 			input(type="text", name="postBody", id='postBody', style="width:300px; height:40px;").span4.required
-			label Tags(usar espacios para insertar varias) 
+			label Etiquetas (usar espacios para insertar varias) 
 			input(type="text", name="postTags", id='postTags').span4.required
 			button(type="submit")#btn-save.btn.btn-primary
 				i.icon-film.icon-white
-				| Save
+				| Guardar
 			div.clear-fix
 			hr
 			div.btm-links
-				a(href='/home')#goto-home Back to Home
+				a(href='/home')#goto-home Volver al Home
 	include navBar
 	include modals/alert
 	include modals/form-errors

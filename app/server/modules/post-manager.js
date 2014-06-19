@@ -5,10 +5,9 @@ var moment 		= require('moment');
 var mongo       = require('mongodb');
 var dbPort 		= 27017;
 var dbHost 		= 'localhost';
-//var dbName 		= 'node-login';
 var dbName 		= 'microBlog';
-/* establish the database connection */
 
+//ESTABLECIMIENTO DE LA CONEXION CON LA BD
     db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}), {w: 1});
 	db.open(function(e, d){
 	if (e) {
@@ -21,7 +20,7 @@ var dbName 		= 'microBlog';
 var PM= this;
 var posts = db.collection('posts');
 
-
+//METODO PARA AÑADIR UN NUEVO ARTICULO
 exports.addNewPost = function(post, callback)
 {
 	posts.findOne({title:post.title}, function(e, o) {
@@ -33,27 +32,12 @@ exports.addNewPost = function(post, callback)
                 var tags = post.tags;
                 var tagsSeparados = tags.split(" ");
                 console.log("TAGS SEPARADOS: "+ tags);
-                //console.log("VideoBlob: "+ post.videoBlob);
                 console.log("VideoBlobURL: "+ post.videoBlobURL);
-                			    // append date stamp when record was created //
 				post.date = moment().format('MMMM Do YYYY, h:mm:ss a');
                 post.tags = tagsSeparados;
                 post.comments = [];
 
-                //prueba 
-                //var binaryData = new MongoDB.Binary(post.videoBlob);
-                //var binaryData = new mongo.Binary(post.videoBlob)
 
-                //PRUEBA FILEREADER
-
-              /*  var fReader = new FileReader();
-                fReader.onload = function(e){
-                    var dataURL = reader.result;
-                    }
-
-
-                fReader.readAsDataURL(post.videoBlob);
-               console.log("dataURL: "+ dataURL);*/
 
 
                 //Prueba para ver si puedo detectar el campo vacio
@@ -75,7 +59,7 @@ exports.addNewPost = function(post, callback)
 				}
 			});
 }
-//metodo para añadir un nuevo comentario.
+//METODO PARA AÑADIR NUEVO COMENTARIO
 exports.newComment = function(commentData,callback){
     posts.findOne({title: commentData.title}, function(e, post){
         if (e) console.log('ERRORAZO  encontrando el post PM.newComment');
@@ -88,10 +72,10 @@ exports.newComment = function(commentData,callback){
 
         posts.update({title: titlePost},
             {
-               //$set: {comments: arrayComentarios}
+              
                $push: {'comments': {'author':authorComentario,'body':bodyComentario,'date':dateComentario}}
             },callback)
-            //function(e,updated){if (!e) console.log('Comentario insertado');}          
+                      
         });
 
 
@@ -103,7 +87,7 @@ exports.editPost = function(postData,callback){
 
         posts.findOne({title: postData.oldTitle}, function(e, post){
 
-        if (e) console.log('ERRORAZO encontrando el post PM.editPost');
+        if (e) console.log('ERROR');
         else{
 
             var tagsAux = postData.tags.split(" ");
@@ -119,22 +103,17 @@ exports.editPost = function(postData,callback){
             var comments = post.comments;
             var videoBlob = post.videoBlob;
             var videoBlobURL= post.videoBlobURL;
+            var isPrivateVideo = post.isPrivate
 
-            console.log('tags(split): '+ tagsAux+ ' tags(sin split):'+ post.tags);
+            //console.log('tags(split): '+ tagsAux+ ' tags(sin split):'+ post.tags);
 
-            //console.log('DATOS CAPTURADOS: '+ titlePost+ " "+ bodyPost+" "+ authorPost+" "+dateEdit+" "+tags+" [comments]  "+comments+" [videoBLOb] "+videoBlob+" [videoBLObURL]  "+videoBlobURL+" ");
-            //var texto = post.comments + commentData.commentBody;
-            //arrayComentarios.push(texto);
-
-           // db.ejemplo.update( {‘autor’:'angel’, ‘titulo’:'Mi primer post…’}, {$push: {‘comentarios’: {‘autor’:'Perico’, ‘texto’:'Que bien’}}})
-           //post.comments= arrayComentarios;
-
+            
 
            //COMPROBAMOS SI EL TITUO ES EL MISMO, SI NO LO ES BORRAMOS EL ARTICULO E INSERTAMOS UNO NUEVO
            if (oldTitle === titlePost){
 
 
-               // console.log("TITLOS IGUALES!!!!!!, el body: "+ bodyPost);      
+       
                 posts.update({title: titlePost},
                     {
                         title:titlePost,
@@ -144,7 +123,8 @@ exports.editPost = function(postData,callback){
                         comments: comments,
                         videoBlob: videoBlob,
                         videoBlobURL: videoBlobURL,
-                        tags: tagsAux
+                        tags: tagsAux,
+                        isPrivate: isPrivateVideo
                         
              
                     },callback)
@@ -170,7 +150,7 @@ exports.editPost = function(postData,callback){
 
             
             }
-      }//end else
+      }
 
         });
     
@@ -184,7 +164,6 @@ exports.deletePost = function(id, callback)
 
 
 //METODO PARA BUSCAR LOS ARTICULOS SEGUN AUTOR
-//NO PROBADO
 exports.getAllPostsFromAuthor = function(author,callback)
 {
 	posts.find({author:author}).toArray(
@@ -195,7 +174,6 @@ exports.getAllPostsFromAuthor = function(author,callback)
 };
 
 //METODO PARA BUSCAR LOS ARTICULOS SEGUN UN TAG
-//NO PROBADO
 exports.getAllPostsFromTag = function(tag,callback)
 {
 	posts.find({tags:tag}).toArray(
@@ -204,7 +182,7 @@ exports.getAllPostsFromTag = function(tag,callback)
 		else callback(null, res)
 	});
 };
-
+//METODO PARA OBTENER TODOS LOS ARTICULOS
 exports.getAllPosts = function(callback)
 {
 	posts.find().toArray(
@@ -213,7 +191,7 @@ exports.getAllPosts = function(callback)
 		else callback(null, res)
 	});
 };
-
+//METODO PARA OBTENER TODOS LOS ARTICULOS NO PRIVADOS
 exports.getAllNoPrivatePosts = function(author,callback)
 {
     posts.find({$or: [{isPrivate:0},{author:author} ]}).toArray(
@@ -225,11 +203,11 @@ exports.getAllNoPrivatePosts = function(author,callback)
     
     }
 
-
+//METODO PARA OBTENER UN ARTICULO EN BASE A UN ID
 exports.findPostById=function(id, callback){
 
-    //console.log("el id dentro del findpostbyid es: "+ getObjectId(id));
-    posts.findOne({_id:getObjectId(id)}, function(error, result) {
+    console.log("el id dentro del findpostbyid es: "+ getObjectId(id));
+    posts.findOne({_id: getObjectId(id)}, function(error, result) {
           if( error ){
               callback(error)
               }else{
@@ -253,7 +231,7 @@ exports.findPostByTitle=function(title, callback){
             });
 
       };
-
+//METODO PARA OBTENER TODOS LOS ARTICULOS DE UN AUTOR
 exports.findPostByAuthor=function(author, callback){
     posts.findOne({author: author}, function(error, result) {
           if( error ){
@@ -268,7 +246,7 @@ exports.findPostByAuthor=function(author, callback){
       };
 
       
-/* auxiliary methods */
+/* METODOS AUXILIARES */
 
 var getObjectId = function(id)
 {

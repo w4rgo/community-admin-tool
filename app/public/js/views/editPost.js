@@ -7,12 +7,11 @@
 		    beforeSubmit : function(formData, jqForm, options){
 		        //console.log('BEFORESUBMIT_formData: '+ formData.commentBody);
                     //formData.push($('#commentBody').val());
-                console.log('BODY en la funcion ajax: '+ $('#editBody').val() );
+                //console.log('BODY en la funcion ajax: '+ $('#editBody').val() );
                 return true;//prueba
 		    },
 		    success	: function(responseText, status, xhr, $form){
-                //console.log('SUCCESS EN FORM AJAX, variable status: '+ status);
-			    //console.log('mostrando modal');
+                
                 $('.modal-alert').modal('show');
                    // ev.showEmailSuccess("Check your email on how to reset your password.");
 		    },
@@ -22,11 +21,11 @@
 		}
 	});
     
-   // setup the alert that displays when an account is successfully created //
+   //CONFIGURACION DEL MODAL DE MODIFICACION REALIZADA
 
 	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
-	$('.modal-alert .modal-header h3').text('Success!');
-	$('.modal-alert .modal-body p').html('Your Post has been modified.</br>Click OK to return to the login page.');
+	$('.modal-alert .modal-header h3').text('Exito!');
+	$('.modal-alert .modal-body p').html('Su articulo ha sido modificado.</br>Pulse OK para volver a la pagina de Login.');
 
  
     

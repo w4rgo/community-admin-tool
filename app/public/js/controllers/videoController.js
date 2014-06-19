@@ -38,8 +38,12 @@ function $(selector) {
   return document.querySelector(selector) || null;
 }
 
-/*El método setTimeout() requiere dos argumentos. El primero es el código que se va a ejecutar o una referencia a la función que se debe ejecutar. El segundo argumento es el tiempo, en milisegundos, que se espera hasta que comienza la ejecución del código
-	El simbolo _ referencia a que es un metodo customizado.*/
+/*El método setTimeout() requiere dos argumentos. 
+El primero es el código que se va a ejecutar o una 
+referencia a la función que se debe ejecutar.
+ El segundo argumento es el tiempo, en milisegundos, 
+que se espera hasta que comienza la ejecución del código
+ El simbolo _ referencia a que es un metodo customizado.*/
 function turnOnCamera(boton){
 
     
@@ -65,22 +69,23 @@ function turnOnCamera(boton){
 	/* el objeto window representa toda la ventana del navegador.
  Como todos los demás objetos heredan directa o indirectamente del objeto window,
 no es necesario ponerlo puesto que va implicito. */
+
 	video.src = window.URL.createObjectURL(stream);
 	finishVideoSetup_();
 
-    //PRUEBA AUDIO
+    //Captura audio
     input = audio_context.createMediaStreamSource(stream);
     input.connect(audio_context.destination);
     console.log('Input connected to audio context destination.');
     recorder = new Recorder(input);
     console.log('Audio Recorder initialised.');
-    //end
+    
 
 },function(error) {
       trace("navigator.getUserMedia error: ", error);
     });
 
-  //prueba audio
+  
     
 }
 

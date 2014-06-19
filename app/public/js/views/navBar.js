@@ -4,26 +4,26 @@
     
 
 
-    // customize the account settings form //
+    //CUSTOMIZACION DEL FORMULARIO PARA LAS PROPIEDADES DE LA CUENTA //
 	
-	$('#account-form h1').text('Account Settings');
-	$('#account-form #sub1').text('Here are the current settings for your account.');
+	$('#account-form h1').text('Propiedades Cuenta');
+	$('#account-form #sub1').text('Aqui se muestran las propiedades de su cuenta.');
 	$('#user-tf').attr('disabled', 'disabled');
-	$('#account-form-btn1').html('Delete');
+	$('#account-form-btn1').html('Borrar');
 	$('#account-form-btn1').addClass('btn-danger');
-	$('#account-form-btn2').html('Update');
+	$('#account-form-btn2').html('Actualizar');
 
-// setup the confirm window that displays when the user chooses to delete their account //
+// CONFIGURACION DE LOS MODALES PARA EL CASO DE QUE SE ELIJA BORRAR LA CUENTA 
 
 	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
-	$('.modal-confirm .modal-header h3').text('Delete Account');
-	$('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
-	$('.modal-confirm .cancel').html('Cancel');
-	$('.modal-confirm .submit').html('Delete');
+	$('.modal-confirm .modal-header h3').text('Borrar Cuenta');
+	$('.modal-confirm .modal-body p').html('¿Estas seguro de que deseas borrar tu cuenta?');
+	$('.modal-confirm .cancel').html('Cancelar');
+	$('.modal-confirm .submit').html('Borrar');
 	$('.modal-confirm .submit').addClass('btn-danger');
 
 
-    //Attempt logout
+ //METODO PARA DELOGUEARSE
     this.attemptLogout = function()
 	{
 		var that = this;
@@ -32,7 +32,7 @@
 			type: "POST",
 			data: {logout : true},
 			success: function(data){
-	 			that.showLockedAlert('You are now logged out.<br>Redirecting you back to the homepage.');
+	 			that.showLockedAlert('Estas deslogueado.<br>Redirigiendo al Home.');
 			},
 			error: function(jqXHR){
 				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);

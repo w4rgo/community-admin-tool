@@ -1,9 +1,10 @@
 ﻿
 $(document).ready(function(){
 
-	var hc = new HomeController();
+	var maController = new modifyAccountController();
 	var av = new AccountValidator();
 	
+    //FORMULARIO AJAX PARA MODIFICAR UNA CUENTA
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (av.validateForm() == false){
@@ -28,22 +29,22 @@ $(document).ready(function(){
 	$('#name-tf').focus();
 	$('#github-banner').css('top', '41px');
 
-// customize the account settings form //
+// CUSTOMIZACION DEL FORMULARIO MODIFICADO DE CUENTA
 	
-	$('#account-form h1').text('Account Settings');
-	$('#account-form #sub1').text('Here are the current settings for your account.');
+	$('#account-form h1').text('Modificacion de cuenta');
+	$('#account-form #sub1').text('A continuacion se muestran las propiedades de su cuenta.');
 	$('#user-tf').attr('disabled', 'disabled');
-	$('#account-form-btn1').html('Delete');
+	$('#account-form-btn1').html('Borrar');
 	$('#account-form-btn1').addClass('btn-danger');
-	$('#account-form-btn2').html('Update');
+	$('#account-form-btn2').html('Actualizar');
 
-// setup the confirm window that displays when the user chooses to delete their account //
+// CUSTOMIZACION DE LA VENTANA MODAL DE CONFIRMACION EN EL CASO DE BORRADO DE CUENTA 
 
 	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
-	$('.modal-confirm .modal-header h3').text('Delete Account');
-	$('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
-	$('.modal-confirm .cancel').html('Cancel');
-	$('.modal-confirm .submit').html('Delete');
+	$('.modal-confirm .modal-header h3').text('Borrar Cuenta');
+	$('.modal-confirm .modal-body p').html('¿Esta seguro de que desea eliminar su cuenta?');
+	$('.modal-confirm .cancel').html('Cancelar');
+	$('.modal-confirm .submit').html('Borrar');
 	$('.modal-confirm .submit').addClass('btn-danger');
 
 })
